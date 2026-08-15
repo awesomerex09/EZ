@@ -1,0 +1,25 @@
+{
+  "editor": {
+    "title": "Site Builder",
+    "save": "Save Changes",
+    "language": "Language",
+    "saved": "Saved successfully!",
+    "failed": "Failed to save"
+  },
+  "effects": {
+    "title": "Effects",
+    "cursorHover": "Cursor Hover Effect",
+    "pressure": "Fluid Pressure",
+    "radius": "Diffusion Radius",
+    "color": "Injection Color",
+    "transition": "Page Transition"
+  },
+  "cards": {
+    "title": "Cards Management",
+    "add": "Add Card",
+    "delete": "Delete",
+    "content": "Content",
+    "position": "Position (Top / Left)",
+    "timeline": "Timeline (Start / End)"
+  }
+}

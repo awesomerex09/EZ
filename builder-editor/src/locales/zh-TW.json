@@ -1,0 +1,25 @@
+{
+  "editor": {
+    "title": "網站編輯器",
+    "save": "儲存變更",
+    "language": "語言",
+    "saved": "儲存成功！",
+    "failed": "儲存失敗"
+  },
+  "effects": {
+    "title": "特效設定",
+    "cursorHover": "游標特效 (Cursor Hover)",
+    "pressure": "流體壓力",
+    "radius": "擴散範圍",
+    "color": "注入顏色",
+    "transition": "頁面轉場"
+  },
+  "cards": {
+    "title": "字卡管理",
+    "add": "新增字卡",
+    "delete": "刪除",
+    "content": "內容",
+    "position": "位置 (Top / Left)",
+    "timeline": "時間軸 (開始 / 結束)"
+  }
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Builder Backend Dashboard</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f4f4f5; color: #18181b; padding: 2rem; }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    h1 { margin-top: 0; }
+    .form-group { margin-bottom: 1.5rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+    input[type="text"], input[type="number"] { width: 100%; padding: 0.5rem; border: 1px solid #d4d4d8; border-radius: 6px; font-size: 1rem; }
+    input[type="checkbox"] { margin-right: 0.5rem; }
+    .card-settings { border: 1px solid #e4e4e7; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; background: #fafafa; }
+    button { background: #000; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-size: 1rem; cursor: pointer; font-weight: 500; }
+    button:hover { background: #27272a; }
+    .toast { display: none; padding: 1rem; background: #22c55e; color: white; border-radius: 6px; margin-top: 1rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Site Configuration Editor</h1>
+    <p>Update the settings below and refresh your frontend (localhost:3002) to see the changes.</p>
+    
+    <form id="configForm">
+      <h2>Desktop Settings</h2>
+      
+      <div class="form-group">
+        <label>Scroll Speed Multiplier</label>
+        <input type="number" id="desktopSpeed" step="0.1" value="1.5">
+      </div>
+      
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="desktopCursorHover"> Enable WebGL Cursor Hover
+        </label>
+      </div>
+
+      <h3>Panels</h3>
+      <div id="desktopPanels"></div>
+
+      <button type="submit">Save Configuration</button>
+      <div id="toast" class="toast">Configuration Saved Successfully!</div>
+    </form>
+  </div>
+
+  <script>
+    let fullConfig = null;
+
+    async function loadConfig() {
+      const res = await fetch('/api/config/site-1');
+      fullConfig = await res.json();
+      
+      const desktop = fullConfig.desktop;
+      document.getElementById('desktopSpeed').value = desktop.scroll.speedMultiplier;
+      document.getElementById('desktopCursorHover').checked = desktop.effects.cursorHover;
+      
+      const panelsContainer = document.getElementById('desktopPanels');
+      panelsContainer.innerHTML = '';
+      
+      desktop.cards.forEach((card, index) => {
+        const div = document.createElement('div');
+        div.className = 'card-settings';
+        div.innerHTML = `
+          <h4>Panel ${index + 1}</h4>
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="card-title-${index}" value="${card.title}">
+          </div>
+          <div class="form-group">
+            <label>Text</label>
+            <input type="text" id="card-text-${index}" value="${card.text}">
+          </div>
+        `;
+        panelsContainer.appendChild(div);
+      });
+    }
+
+    document.getElementById('configForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Update desktop config
+      fullConfig.desktop.scroll.speedMultiplier = parseFloat(document.getElementById('desktopSpeed').value);
+      fullConfig.desktop.effects.cursorHover = document.getElementById('desktopCursorHover').checked;
+      
+      fullConfig.desktop.cards.forEach((card, index) => {
+        card.title = document.getElementById(`card-title-${index}`).value;
+        card.text = document.getElementById(`card-text-${index}`).value;
+      });
+
+      // Send to backend
+      const res = await fetch('/api/config/site-1', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fullConfig)
+      });
+      
+      if (res.ok) {
+        const toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 3000);
+      }
+    });
+
+    loadConfig();
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', 'Roboto', sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white antialiased overflow-x-hidden m-0 p-0;
+  }
+}
+
+/* Apple-style translucent blur */
+.glass-panel {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
+}
+
+/* Canvas wrapper styling */
+#canvas-container {
+  @apply fixed top-0 left-0 w-full h-full z-0 pointer-events-none;
+}
+
+/* Scroll track for scrollytelling */
+#track-container {
+  /* Height will be managed by JS or CSS, usually 300vh - 500vh */
+  @apply w-full relative z-10;
+}
