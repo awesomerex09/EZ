@@ -1,7 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
+*, *::before, *::after { box-sizing: border-box; }
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
+  background: #0d0d0f;
+  color: #fff;
+  overflow: hidden;
 }
+
+/* Slim scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
+/* Range inputs */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.1);
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 6px rgba(59,130,246,0.5);
+}
+
+/* Border opacity util not in Tailwind v4 sometimes */
+.border-white\/8 { border-color: rgba(255,255,255,0.08); }
